@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+supabase
+pymupdf
+spacy
+python-dotenv
+google-genai
+apify-client
+requests
+groq
+razorpay
+python-multipart
+PyPDF2
+nltk
+httpx

@@ -1,0 +1,7 @@
+python3 -m venv spd_venv
+
+source spd_venv/bin/activate
+
+pip install ...
+
+deactivate
