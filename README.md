@@ -2,7 +2,7 @@
 
 **Profilr** is a comprehensive, advanced career management platform designed for students and job-seekers to optimize their applications, track their progress, and showcase their professional identity.
 
-## 🚀 Key Features
+## Key Features
 
 *   **ATS Score Analysis**: Get real-time, industry-standard scores for your resumes using NLP-based analysis.
 *   **AI Recommendations**: Personalized, high-impact suggestions powered by **Google Gemini** and **Groq** to improve your resume content.
@@ -11,7 +11,7 @@
 *   **Public Portfolios**: Generate a dynamic, premium public portfolio to impress recruiters.
 *   **Visit Analytics**: Gain insights into how often your public profile is viewed.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **React + Vite**: High-performance development.
@@ -27,7 +27,7 @@
 
 ---
 
-## 🏗️ Getting Started
+## Getting Started
 
 ### Backend Setup
 1. Create a virtual environment:
@@ -48,8 +48,3 @@
    ```bash
    npm run dev
    ```
-
----
-
-## 📄 License
-© 2026 PROFILR. Built by Rahul, Alan, and Evana.
