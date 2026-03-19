@@ -21,6 +21,12 @@ except LookupError:
     nltk.download('stopwords', download_dir=nltk_data_dir)
     nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
 
+try:
+    nlp = spacy.load('en_core_web_sm')
+except Exception:
+    import en_core_web_sm
+    nlp = en_core_web_sm.load()
+
 # Load spaCy model (installed via requirements.txt)
 try:
     nlp = spacy.load('en_core_web_sm')
