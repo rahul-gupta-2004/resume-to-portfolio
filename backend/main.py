@@ -18,6 +18,10 @@ from groq import Groq
 import razorpay
 import hmac
 import hashlib
+import nltk
+
+nltk.download('punkt')
+nltk.download('stopwords')
 
 # Load environment variables
 load_dotenv()
