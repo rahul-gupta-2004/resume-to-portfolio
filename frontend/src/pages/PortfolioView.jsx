@@ -460,7 +460,12 @@ export default function PortfolioView() {
               if (customSlug) window.open(`/${customSlug}`, '_blank');
               else alert('Go to Settings and set your Custom Slug first!');
             } else {
-              window.open(`/p/${session.user.id}`, '_blank');
+              const slug = formData.linkedin_url?.split('/in/')[1]?.replace(/\/$/, '');
+              if (slug) {
+                window.open(`/${slug}`, '_blank');
+              } else {
+                window.open(`/p/${session.user.id}`, '_blank');
+              }
             }
           }} className="sidebar-action-btn" style={{ ...sidebar.downloadBtn, marginBottom: '10px', background: 'rgba(56, 189, 248, 0.1)', borderColor: '#38bdf8', color: '#38bdf8' }}>
             <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize: '15px'}}></i> View Deployed Link
