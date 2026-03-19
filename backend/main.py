@@ -24,12 +24,20 @@ load_dotenv()
 
 # Configure Gemini with the new SDK
 google_key = os.getenv("GOOGLE_API_KEY")
-client = genai.Client(api_key=google_key) if google_key else None
+try:
+    client = genai.Client(api_key=google_key) if google_key else None
+except Exception as e:
+    print(f"Gemini Init Error: {e}")
+    client = None
 GEMINI_MODEL = "gemini-2.0-flash" # Updated default
 
 # Configure Groq
 groq_key = os.getenv("GROQ_API_KEY")
-groq_client = Groq(api_key=groq_key) if groq_key else None
+try:
+    groq_client = Groq(api_key=groq_key) if groq_key else None
+except Exception as e:
+    print(f"Groq Init Error: {e}")
+    groq_client = None
 GROQ_MODEL = "llama-3.3-70b-versatile"
 
 app = FastAPI()
@@ -53,7 +61,11 @@ app.add_middleware(
 # ── Supabase connection (reads from .env) ────────────────────────
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL and SUPABASE_KEY else None
+try:
+    supabase = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL and SUPABASE_KEY else None
+except Exception as e:
+    print(f"Supabase Init Error: {e}")
+    supabase = None
 
 # ── Razorpay connection (reads from .env) ────────────────────────
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
