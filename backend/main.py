@@ -23,11 +23,13 @@ import hashlib
 load_dotenv()
 
 # Configure Gemini with the new SDK
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+google_key = os.getenv("GOOGLE_API_KEY")
+client = genai.Client(api_key=google_key) if google_key else None
 GEMINI_MODEL = "gemini-2.0-flash" # Updated default
 
 # Configure Groq
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+groq_key = os.getenv("GROQ_API_KEY")
+groq_client = Groq(api_key=groq_key) if groq_key else None
 GROQ_MODEL = "llama-3.3-70b-versatile"
 
 app = FastAPI()
@@ -38,7 +40,7 @@ def read_root():
 
 # Apify client
 APIFY_API_KEY = os.getenv("APIFY_API_KEY")
-apify_client = ApifyClient(APIFY_API_KEY)
+apify_client = ApifyClient(APIFY_API_KEY) if APIFY_API_KEY else None
 
 # ── CORS ────────────────────────────────────────────────────────
 app.add_middleware(
@@ -51,12 +53,12 @@ app.add_middleware(
 # ── Supabase connection (reads from .env) ────────────────────────
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL and SUPABASE_KEY else None
 
 # ── Razorpay connection (reads from .env) ────────────────────────
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
-razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
+razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET)) if RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET else None
 
 # ── Load spaCy NLP model ─────────────────────────────────────────
 nlp = spacy.load("en_core_web_sm")
