@@ -27,14 +27,6 @@ except Exception:
     import en_core_web_sm
     nlp = en_core_web_sm.load()
 
-# Load spaCy model (installed via requirements.txt)
-try:
-    nlp = spacy.load('en_core_web_sm')
-except Exception:
-    # Fallback to loading it directly if needed
-    import en_core_web_sm
-    nlp = en_core_web_sm.load()
-
 class ATSScoreCalculator:
     def __init__(self, job_description: str = None):
         """
