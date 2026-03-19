@@ -73,7 +73,7 @@ export default function Onboarding() {
     setError(null);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/fetch-linkedin', {
+      const response = await fetch('https://profilr-backend.onrender.com/fetch-linkedin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url }),
@@ -109,7 +109,7 @@ export default function Onboarding() {
         setStep(1);
       }
     } catch (err) {
-      setError('Connection to AI backend failed. Please ensure the backend is running at http://127.0.0.1:8000');
+      setError('Connection to AI backend failed. Please ensure the backend is running at https://profilr-backend.onrender.com');
       setStep(1);
     } finally {
       setLoading(false);

@@ -21,7 +21,7 @@ export default function Account() {
 
   const fetchUserTier = async (userId) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/get-user-tier/${userId}`);
+      const response = await fetch(`https://profilr-backend.onrender.com/get-user-tier/${userId}`);
       const result = await response.json();
       if (result.status === 'success') {
         setTier(result.tier);
@@ -60,7 +60,7 @@ export default function Account() {
 
     try {
       // 1. Create order on backend
-      const resOrder = await fetch('http://127.0.0.1:8000/create-razorpay-order', {
+      const resOrder = await fetch('https://profilr-backend.onrender.com/create-razorpay-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: user.id, amount: 29900 }) // 299 INR
@@ -80,7 +80,7 @@ export default function Account() {
         order_id: orderData.order.id,
         handler: async function (response) {
           // 2. Verify payment on backend
-          const resVerify = await fetch('http://127.0.0.1:8000/verify-razorpay-payment', {
+          const resVerify = await fetch('https://profilr-backend.onrender.com/verify-razorpay-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

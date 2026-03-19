@@ -77,7 +77,7 @@ export default function ResumeTailor() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
       
-      const response = await fetch('http://127.0.0.1:8000/agentic-tailor', {
+      const response = await fetch('https://profilr-backend.onrender.com/agentic-tailor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -115,7 +115,7 @@ export default function ResumeTailor() {
   const compilePDF = async (codeStr) => {
     setIsCompiling(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/compile-pdf`, {
+      const res = await fetch(`https://profilr-backend.onrender.com/compile-pdf`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ latex: codeStr })

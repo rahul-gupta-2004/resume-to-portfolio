@@ -98,7 +98,7 @@ export default function PaymentModal({ isOpen, onClose, onShowSuccess }) {
             if (!user) throw new Error("User not found (Try logging in again)");
 
             // 1. Create order on backend
-            const resOrder = await fetch('http://127.0.0.1:8000/create-razorpay-order', {
+            const resOrder = await fetch('https://profilr-backend.onrender.com/create-razorpay-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: user.id, amount: 29900 }) 
@@ -117,7 +117,7 @@ export default function PaymentModal({ isOpen, onClose, onShowSuccess }) {
                 description: "Full Platform Upgrade",
                 order_id: orderData.order.id,
                 handler: async function (response) {
-                    const resVerify = await fetch('http://127.0.0.1:8000/verify-razorpay-payment', {
+                    const resVerify = await fetch('https://profilr-backend.onrender.com/verify-razorpay-payment', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

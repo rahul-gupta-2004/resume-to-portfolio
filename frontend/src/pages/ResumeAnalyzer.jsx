@@ -48,7 +48,7 @@ export default function ResumeAnalyzer({ activeTheme = defaultTheme }) {
     if (jobDescription) formData.append('job_description', jobDescription);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/process-resume', {
+      const response = await fetch('https://profilr-backend.onrender.com/process-resume', {
         method: 'POST',
         body: formData,
       });

@@ -227,7 +227,7 @@ export default function ApplicationTracker() {
 
   const fetchApplications = async (userId) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/applications/${userId}`);
+      const response = await fetch(`https://profilr-backend.onrender.com/applications/${userId}`);
       const result = await response.json();
       if (result.status === 'success') {
         setApplications(result.data);
@@ -261,7 +261,7 @@ export default function ApplicationTracker() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = editApp ? `http://127.0.0.1:8000/applications/${editApp.id}` : 'http://127.0.0.1:8000/applications';
+      const url = editApp ? `https://profilr-backend.onrender.com/applications/${editApp.id}` : 'https://profilr-backend.onrender.com/applications';
       const method = editApp ? 'PUT' : 'POST';
       
       const response = await fetch(url, {
@@ -288,7 +288,7 @@ export default function ApplicationTracker() {
 
   const updateStatus = async (appId, newStatus) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/applications/${appId}`, {
+      const response = await fetch(`https://profilr-backend.onrender.com/applications/${appId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -305,7 +305,7 @@ export default function ApplicationTracker() {
     e.stopPropagation();
     if (!confirm('Are you sure you want to delete this lead?')) return;
     try {
-      await fetch(`http://127.0.0.1:8000/applications/${appId}`, { method: 'DELETE' });
+      await fetch(`https://profilr-backend.onrender.com/applications/${appId}`, { method: 'DELETE' });
       setApplications(apps => apps.filter(a => a.id !== appId));
     } catch (error) {
       console.error('Error deleting:', error);

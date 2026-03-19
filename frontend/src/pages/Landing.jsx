@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import Lottie from 'lottie-react';
-import resumeAnim from '../assets/resume.json';
+import botAnim from '../assets/chatbot.json';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -138,7 +138,7 @@ export default function Landing() {
         {/* Lottie Animation */}
         <div style={{ flex: '1', minWidth: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '500px' }}>
           <Lottie 
-            animationData={resumeAnim} 
+            animationData={botAnim} 
             loop={true} 
             style={{ width: '100%', height: '100%', maxWidth: '500px' }} 
           />

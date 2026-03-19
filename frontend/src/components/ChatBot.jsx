@@ -67,7 +67,7 @@ export default function ChatBot() {
                 content: m.text
             }));
 
-            const response = await fetch('http://127.0.0.1:8000/chatbot', {
+            const response = await fetch('https://profilr-backend.onrender.com/chatbot', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: trimmed, history: history.slice(-5) })
