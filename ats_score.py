@@ -8,21 +8,26 @@ import nltk
 from nltk.corpus import stopwords
 import spacy
 
-# Download required NLTK data
+# Download required NLTK data to /tmp (Vercel's only writable folder)
+nltk_data_dir = "/tmp/nltk_data"
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir)
+nltk.data.path.append(nltk_data_dir)
+
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
-    nltk.download('punkt')
-    nltk.download('stopwords')
-    nltk.download('averaged_perceptron_tagger')
+    nltk.download('punkt', download_dir=nltk_data_dir)
+    nltk.download('stopwords', download_dir=nltk_data_dir)
+    nltk.download('averaged_perceptron_tagger', download_dir=nltk_data_dir)
 
-# Load spaCy model for NLP tasks
+# Load spaCy model (installed via requirements.txt)
 try:
     nlp = spacy.load('en_core_web_sm')
-except:
-    import subprocess
-    subprocess.run(['python', '-m', 'spacy', 'download', 'en_core_web_sm'])
-    nlp = spacy.load('en_core_web_sm')
+except Exception:
+    # Fallback to loading it directly if needed
+    import en_core_web_sm
+    nlp = en_core_web_sm.load()
 
 class ATSScoreCalculator:
     def __init__(self, job_description: str = None):
