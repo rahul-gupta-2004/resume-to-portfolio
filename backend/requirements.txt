@@ -2,7 +2,7 @@ fastapi
 uvicorn
 pydantic
 supabase
-pymupdf
+pymupdf>=1.24.0
 spacy
 python-dotenv
 google-genai
