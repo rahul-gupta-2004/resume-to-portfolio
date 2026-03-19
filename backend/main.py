@@ -32,6 +32,10 @@ GROQ_MODEL = "llama-3.3-70b-versatile"
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "Hello from Vercel!"}
+
 # Apify client
 APIFY_API_KEY = os.getenv("APIFY_API_KEY")
 apify_client = ApifyClient(APIFY_API_KEY)
@@ -81,7 +85,6 @@ def compute_ats_score(found_skills: list[str]) -> int:
         return 0
     score = int((len(found_skills) / len(TECH_KEYWORDS)) * 100)
     return min(score, 100)  # cap at 100
-
 
 @app.post("/process-resume")
 async def process_resume(
