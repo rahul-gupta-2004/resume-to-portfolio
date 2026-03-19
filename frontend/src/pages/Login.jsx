@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -72,7 +72,7 @@ export default function Login() {
 
         <p style={styles.footer}>
           New here?{' '}
-          <a href="/signup" style={styles.link}>Create an account</a>
+          <Link to="/signup" style={styles.link}>Create an account</Link>
         </p>
       </div>
     </div>
