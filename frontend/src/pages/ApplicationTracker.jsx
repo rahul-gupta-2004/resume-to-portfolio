@@ -227,11 +227,14 @@ export default function ApplicationTracker() {
 
   const fetchApplications = async (userId) => {
     try {
-      const response = await fetch(`https://profilr-backend.onrender.com/applications/${userId}`);
-      const result = await response.json();
-      if (result.status === 'success') {
-        setApplications(result.data);
-      }
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setApplications(data || []);
     } catch (error) {
       console.error('Error fetching applications:', error);
     } finally {
@@ -261,41 +264,56 @@ export default function ApplicationTracker() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = editApp ? `https://profilr-backend.onrender.com/applications/${editApp.id}` : 'https://profilr-backend.onrender.com/applications';
-      const method = editApp ? 'PUT' : 'POST';
-      
-      const response = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, user_id: session?.user?.id })
-      });
-      const result = await response.json();
-      
-      if (result.status === 'success') {
-        if (editApp) {
-          setApplications(apps => apps.map(a => a.id === editApp.id ? result.data : a));
-        } else {
-          setApplications([result.data, ...applications]);
-        }
-        setShowModal(false);
+      const payload = {
+        user_id: session?.user?.id,
+        company: formData.company,
+        role: formData.role,
+        status: formData.status,
+        location: formData.location,
+        salary: formData.salary,
+        notes: formData.notes,
+        next_step: formData.next_step,
+        date_applied: editApp ? editApp.date_applied : new Date().toISOString().split('T')[0]
+      };
+
+      if (editApp) {
+        // Update existing application
+        const { data, error } = await supabase
+          .from('applications')
+          .update(payload)
+          .eq('id', editApp.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        setApplications(apps => apps.map(a => a.id === editApp.id ? data : a));
       } else {
-        alert('Error: ' + result.detail);
+        // Create new application
+        const { data, error } = await supabase
+          .from('applications')
+          .insert([payload])
+          .select()
+          .single();
+
+        if (error) throw error;
+        setApplications([data, ...applications]);
       }
+      setShowModal(false);
     } catch (error) {
-      alert('Error saving application. Check backend/Supabase connection.');
+      console.error('Error saving application:', error);
+      alert('Error saving application. Check Supabase connection.');
     }
   };
 
   const updateStatus = async (appId, newStatus) => {
     try {
-      const response = await fetch(`https://profilr-backend.onrender.com/applications/${appId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
-      });
-      if (response.ok) {
-        setApplications(apps => apps.map(a => a.id === appId ? { ...a, status: newStatus } : a));
-      }
+      const { error } = await supabase
+        .from('applications')
+        .update({ status: newStatus })
+        .eq('id', appId);
+
+      if (error) throw error;
+      setApplications(apps => apps.map(a => a.id === appId ? { ...a, status: newStatus } : a));
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -305,7 +323,12 @@ export default function ApplicationTracker() {
     e.stopPropagation();
     if (!confirm('Are you sure you want to delete this lead?')) return;
     try {
-      await fetch(`https://profilr-backend.onrender.com/applications/${appId}`, { method: 'DELETE' });
+      const { error } = await supabase
+        .from('applications')
+        .delete()
+        .eq('id', appId);
+
+      if (error) throw error;
       setApplications(apps => apps.filter(a => a.id !== appId));
     } catch (error) {
       console.error('Error deleting:', error);
